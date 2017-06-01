@@ -20,3 +20,7 @@ Plug 'roxma/nvim-completion-manager'
 Plug 'dafufer/nvim-cm-swift'
 
 ```
+
+## jump to placeholders
+autocmd FileType swift nmap <buffer> <C-k> <Plug>(swift_completer_jump_to_placeholder)
+autocmd FileType swift imap <buffer> <C-k> <Plug>(swift_completer_jump_to_placeholder)
