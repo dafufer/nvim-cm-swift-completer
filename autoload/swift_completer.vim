@@ -1,3 +1,5 @@
+" Based on the code from https://github.com/mitsuse/autocomplete-swift
+
 let s:placeholder_pattern = '<#\%(T##\)\?\%([^#]\+##\)\?\([^#]\+\)#>'
 
 function! swift_completer#jump_to_placeholder()
