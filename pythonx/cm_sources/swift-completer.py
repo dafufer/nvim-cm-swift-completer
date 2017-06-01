@@ -85,7 +85,7 @@ class Source(Base):
         matches = []
         jsonList = json.loads(result.decode('utf-8'))
         for item in jsonList:
-            name = item["name"].replace("(:)", "()")
+            name = item["name"]
             des = item["descriptionKey"]
             doc = ""
             if "docBrief" in item:
