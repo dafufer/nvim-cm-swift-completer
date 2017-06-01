@@ -1,22 +1,6 @@
-" Use the toolchain specified with `com.apple.dt.toolchain.{name}`.
-"function! ncm-cm-swift-completer#use_toolchain(name)
-    "call ncm-cm-swift-completer#use_custom_toolchain(s:get_xcode_toolchain(a:name))
-"endfunction
-
-" Use the custom toolchain specified with the given identifier.
-"function! ncm-cm-swift-completer#use_custom_toolchain(identifier)
-    "let g:ncm-cm-swift-completer#toolchain = a:identifier
-"endfunction
-
-"func s:get_xcode_toolchain(name)
-    "return 'com.apple.dt.toolchain.' . a:name
-"endfunction
-
-
-
 let s:placeholder_pattern = '<#\%(T##\)\?\%([^#]\+##\)\?\([^#]\+\)#>'
 
-function! ncm-cm-swift-completer#jump_to_placeholder()
+function! swift_completer#jump_to_placeholder()
   if &filetype !=# 'swift'
     return ''
   end
@@ -25,10 +9,10 @@ function! ncm-cm-swift-completer#jump_to_placeholder()
     return ''
   endif
 
-  return "\<ESC>:call ncm-cm-swift-completer#begin_replacing_placeholder()\<CR>"
+  return "\<ESC>:call swift_completer#begin_replacing_placeholder()\<CR>"
 endfunction
 
-function! ncm-cm-swift-completer#begin_replacing_placeholder()
+function! swift_completer#begin_replacing_placeholder()
     if mode() !=# 'n'
         return
     endif
