@@ -68,17 +68,17 @@ class Source(Base):
             offset += 1
 
         args = ['sourcekitten', 'complete', '--text', src, '--offset', str(offset)]
-        # result = subprocess.check_output(args)
-        proc = subprocess.Popen(args=args,
-                                stdin=subprocess.PIPE,
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE)
+        result = subprocess.check_output(args)
+        # proc = subprocess.Popen(args=args,
+                                # stdin=subprocess.PIPE,
+                                # stdout=subprocess.PIPE,
+                                # stderr=subprocess.PIPE)
 
-        try:
-            result, errs = proc.communicate(src, timeout=30)
-        except TimeoutExpired:
-            proc.kill()
-            result, errs = proc.communicate()
+        # try:
+            # result, errs = proc.communicate(src, timeout=30)
+        # except TimeoutExpired:
+            # proc.kill()
+            # result, errs = proc.communicate()
 
         logger.info("args: %s, result: [%s]", args, errs.decode())
 
