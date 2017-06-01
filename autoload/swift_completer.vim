@@ -1,4 +1,4 @@
-let s:placeholder_pattern = '\&<#\%(T##\)\?\%([^#]\+##\)\?\([^#]\+\)#>'
+let s:placeholder_pattern = '&<#\%(T##\)\?\%([^#]\+##\)\?\([^#]\+\)#>'
 
 function! swift_completer#jump_to_placeholder()
   if &filetype !=# 'swift'
