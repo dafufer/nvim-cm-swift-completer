@@ -8,7 +8,7 @@ based on the [SourceKitten framework](https://github.com/jpsim/SourceKitten).
 
 ## Requirements
 
-- Install and config [SourceKitten](https://github.com/jpsim/SourceKitten#installation)
+- Install and config [SourceKitten](_images/example.gif)
 
 ## vimrc example
 
