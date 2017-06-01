@@ -16,7 +16,7 @@
 
 let s:placeholder_pattern = '<#\%(T##\)\?\%([^#]\+##\)\?\([^#]\+\)#>'
 
-function! s:jump_to_placeholder()
+function! ncm-cm-swift-completer#jump_to_placeholder()
   if &filetype !=# 'swift'
     return ''
   end
