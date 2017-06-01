@@ -80,7 +80,7 @@ class Source(Base):
             # proc.kill()
             # result, errs = proc.communicate()
 
-        logger.info("args: %s, result: [%s]", args, errs.decode())
+        logger.info("args: %s, result: [%s]", args, result.decode())
 
         matches = []
         jsonList = json.loads(result.decode('utf-8'))
