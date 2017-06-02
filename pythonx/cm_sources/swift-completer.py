@@ -15,7 +15,7 @@ register_source(name='swift-completer',
                 abbreviation='swift',
                 scoping=True,
                 scopes=['swift'],
-                cm_refresh_patterns=[r'(\.|:|: )$'],)
+                cm_refresh_patterns=[r'(\.|:|:\s*\w*)$'],)
 
 
 import json
@@ -56,16 +56,12 @@ class Source(Base):
         startcol = ctx['startcol']
 
 
-        offset = 0
-        for current_line, text in enumerate(src.splitlines()):
-            if current_line < lnum - 1:
-                offset += len(text) + 1
-            elif current_line == lnum - 1:
-                offset += len(text[0:col]) - 1
-                # This is a hack to show init methods correctly
-                if src[offset] in b'.':
-                    offset += 1
-                break
+        offset = self.nvim.eval('line2byte(' + str(lnum) + ')') + col - 1
+        # For accessing methods
+        if src[offset-2] in b'.':
+            offset -= 1
+
+        # logger.info("offset: %d", offset)
 
         args = ['sourcekitten', 'complete', '--text', src, '--offset', str(offset)]
         result = subprocess.check_output(args)
