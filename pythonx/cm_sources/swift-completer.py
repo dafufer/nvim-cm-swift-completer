@@ -54,17 +54,32 @@ class Source(Base):
         col = ctx['col']
         filepath = ctx['filepath']
         startcol = ctx['startcol']
-
+        spm = self.nvim.eval('swift_completer#get_spm_module()')
+        target = self.nvim.eval('swift_completer#get_target()')
+        sdk = self.nvim.eval('swift_completer#get_sdk()')
 
         offset = self.nvim.eval('line2byte(' + str(lnum) + ')') + col - 1
         # For accessing methods
         if src[offset-2] in b'.':
             offset -= 1
 
-        # logger.info("offset: %d", offset)
-
         args = ['sourcekitten', 'complete', '--text', src, '--offset', str(offset)]
-        result = subprocess.check_output(args)
+        if spm:
+            args += ['--spm-module', spm]
+
+        if target or sdk:
+            args += ['--']
+
+        if target:
+            args += ['-target', target]
+
+        if sdk:
+            args += ['-sdk', sdk]
+
+        try:
+            result = subprocess.check_output(args)
+        except subprocess.CalledProcessError as e:
+            return
 
         logger.info("args: %s, result: [%s]", args, result.decode())
 
@@ -86,6 +101,6 @@ class Source(Base):
 
             matches.append(match)
 
-        logger.info("matches: [%s]", matches)
+        # logger.info("matches: [%s]", matches)
 
         self.complete(info, ctx, startcol, matches)

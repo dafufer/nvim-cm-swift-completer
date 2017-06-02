@@ -1,0 +1,95 @@
+*nvim-cm-swift-completer.txt* Swift completion plugin for
+nvim-completion-manager (https://github.com/roxma/nvim-completion-manager)
+
+This plugin will add Swift completion entries to the nvim-completion-manager.
+The plugin uses sourcekitten (https://github.com/jpsim/SourceKitten) in order
+to obtain the completion entries.
+
+Global options:                        *nvim-cm-swift-completer-global-options*
+
+                                                         *'swift_completer_sdk'*
+Type: string
+Default: ''
+Use this option to specify the full path to the SDK you would like to use. If
+left empty, it will use the default SDK (MacOS or PC) of the system.
+Example: >
+    let g:swift_completer_sdk =
+    '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk'
+<
+
+                                                      *'swift_completer_target'*
+Type: string
+Default: ''
+Use this option to specify the compilation target. If left empty, it will use
+the default target of the system.
+Examples: >
+    let g:swift_completer_target = 'arm64-apple-ios9.0' " iOS
+    let g:swift_completer_target = 'x86_64-apple-darwin16.6.0' " MacOS
+<
+
+                                                  *'swift_completer_spm_module'*
+Type: string
+Default: ''
+Use this option to specify the name of a swift package manager module, in
+order to let sourcekitten read the flags from it. If left empty, it will be
+ignored.
+WARNING! This option has not been tested yet!
+Example: >
+    let g:swift_completer_spm_module = 'Test'
+<
+
+Each one these options have their local equivalents:
+|'b:swift_completer_sdk'|
+|'b:swift_completer_target'|
+|'b:swift_completer_spm_module'|
+This variables take precedence over the global ones.
+
+
+Mappings:                                *nvim-cm-swift-completer-global-options*
+
+You can map the keys in order to jump to a placeholder create by a snippet
+plugin:
+WARNING! Only tested on UltiSnip
+Example: Using control+k to jump
+
+>
+    autocmd FileType swift nmap <buffer> <C-k> <Plug>(swift_completer_jump_to_placeholder)
+    autocmd FileType swift imap <buffer> <C-k> <Plug>(swift_completer_jump_to_placeholder)
+<
+
+About:                                            *nvim-cm-swift-completer-about*
+
+The core maintainer of nvim-cm-swift-completer is:
+    David Furio (GitHub: dafufer)
+
+Find the latest version of nvim-cm-swift-completer at:
+
+    https://github.com/dafufer/nvim-cm-swift-completer
+
+==============================================================================
+9. License                                     *nvim-cm-swift-completer-license*
+
+nvim-cm-swift-completer is released under the MIT LICENSE
+Copyright © 2017 David Furió
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
+OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+See http://sam.zoy.org/wtfpl/COPYING.
+
+vim:tw=80:sw=4:ft=help:norl:
