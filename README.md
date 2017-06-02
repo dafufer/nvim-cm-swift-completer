@@ -17,7 +17,7 @@ based on the [SourceKitten framework](https://github.com/jpsim/SourceKitten).
 Plug 'roxma/nvim-completion-manager'
 
 " swift
-Plug 'dafufer/nvim-cm-swift'
+Plug 'dafufer/nvim-cm-swift-completer'
 
 ```
 
