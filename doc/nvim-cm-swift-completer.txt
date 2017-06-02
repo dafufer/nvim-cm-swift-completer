@@ -1,5 +1,5 @@
 *nvim-cm-swift-completer.txt* Swift completion plugin for
-
+nvim-completion-manager (https://github.com/roxma/nvim-completion-manager)
 
 This plugin will add Swift completion entries to the nvim-completion-manager.
 The plugin uses sourcekitten (https://github.com/jpsim/SourceKitten) in order
