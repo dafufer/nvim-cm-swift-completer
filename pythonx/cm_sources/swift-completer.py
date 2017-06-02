@@ -17,6 +17,7 @@ register_source(name='swift-completer',
                 scopes=['swift'],
                 cm_refresh_patterns=[r'(\.|:|: )$'],)
 
+
 import json
 import os
 import subprocess
@@ -61,24 +62,13 @@ class Source(Base):
                 offset += len(text) + 1
             elif current_line == lnum - 1:
                 offset += len(text[0:col]) - 1
+                # This is a hack to show init methods correctly
+                if src[offset] in b'.':
+                    offset += 1
                 break
-
-        # This is a hack to show init methods correctly
-        if src[offset] in b'. :':
-            offset += 1
 
         args = ['sourcekitten', 'complete', '--text', src, '--offset', str(offset)]
         result = subprocess.check_output(args)
-        # proc = subprocess.Popen(args=args,
-                                # stdin=subprocess.PIPE,
-                                # stdout=subprocess.PIPE,
-                                # stderr=subprocess.PIPE)
-
-        # try:
-            # result, errs = proc.communicate(src, timeout=30)
-        # except TimeoutExpired:
-            # proc.kill()
-            # result, errs = proc.communicate()
 
         logger.info("args: %s, result: [%s]", args, result.decode())
 
@@ -100,6 +90,6 @@ class Source(Base):
 
             matches.append(match)
 
-        # logger.info("matches: [%s]", matches)
+        logger.info("matches: [%s]", matches)
 
         self.complete(info, ctx, startcol, matches)
