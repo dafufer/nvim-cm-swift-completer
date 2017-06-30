@@ -75,7 +75,7 @@ class Source(Base):
         lnum = ctx['lnum']
         # col = ctx['col'] # get_complete_position(ctx) # startcol + 1
         startcol = ctx['startcol']
-        col = get_complete_position(ctx) + 1
+        col = self.get_complete_position(ctx) + 1
         enc = self.nvim.options['encoding']
 
         content = '\n'.join(buf)
