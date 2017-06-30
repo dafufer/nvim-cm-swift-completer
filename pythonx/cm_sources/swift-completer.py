@@ -15,9 +15,7 @@ register_source(name='swift-completer',
                 abbreviation='swift',
                 scoping=1,
                 scopes=['swift'],
-                # cm_refresh_patterns=[r'(-\>|\.|:)$'],
                 cm_refresh_patterns=[r'((?:\.|(?:,|:|->)\s+)\w*|\()'],
-                # cm_refresh_patterns=[r'(\.|:|:\s*\w*)$'],
                )
 
 
@@ -75,9 +73,6 @@ class Source(Base):
             if row_current < lnum - 1:
                 offset += len(bytes(text, enc)) + 1
         offset += col - 2
-
-        # logger.info("offset: %d", offset)
-        # logger.info("startcol: %d", startcol)
 
         # Set sourcekitten arguments
         args = ['sourcekitten', 'complete', '--text', content.encode(enc), '--offset', str(offset)]
