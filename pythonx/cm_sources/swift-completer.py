@@ -121,7 +121,7 @@ class Source(Base):
 
             # snippet = item["sourcetext"]
 
-            match = dict(word=name,
+            match = dict(word="test",
                          icase=1,
                          dup=1,
                          # menu=kind,
