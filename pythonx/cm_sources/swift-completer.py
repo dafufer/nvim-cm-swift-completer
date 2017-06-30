@@ -77,6 +77,7 @@ class Source(Base):
                 offset += col - 1
 
         logger.info("offset: %d", offset)
+        logger.info("startcol: %d", startcol)
 
         # Set sourcekitten arguments
         args = ['sourcekitten', 'complete', '--text', content.encode(enc), '--offset', str(offset)]
