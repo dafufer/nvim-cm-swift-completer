@@ -124,7 +124,7 @@ class Source(Base):
                          icase=1,
                          dup=1,
                          menu=kind,
-                         info=des,
+                         # info=des,
                          snippet=snippet,
                         )
 
