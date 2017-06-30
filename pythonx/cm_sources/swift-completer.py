@@ -13,7 +13,7 @@ from cm import register_source, getLogger, Base
 register_source(name='swift-completer',
                 priority=9,
                 abbreviation='swift',
-                scoping=True,
+                scoping=1,
                 scopes=['swift'],
                 # cm_refresh_patterns=[r'(-\>|\.|:)$'],
                 cm_refresh_patterns=[r'((?:\.|(?:,|:|->)\s+)\w*|\()'],
@@ -76,7 +76,9 @@ class Source(Base):
                 offset += len(bytes(text, enc)) + 1
                 offset += col - 1
 
-            # Set sourcekitten arguments
+        logger.info("offset: %d", offset)
+
+        # Set sourcekitten arguments
         args = ['sourcekitten', 'complete', '--text', content.encode(enc), '--offset', str(offset)]
         if self.__spm:
             args += ['--spm-module', self.__spm]
