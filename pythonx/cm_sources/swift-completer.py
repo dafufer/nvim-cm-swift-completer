@@ -126,8 +126,7 @@ class Source(Base):
                          snippet=snippet,
                         )
 
-            logger.info("match: %s", match)
-            # matches.append(match)
+            matches += match
 
         # logger.debug("matches: [%s]", matches)
 
