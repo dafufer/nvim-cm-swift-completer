@@ -105,7 +105,6 @@ class Source(Base):
 
         matches = []
         for item in json_list:
-            logger.info("json_list: [%d]", len(json_list))
             doc = ""
             if "docBrief" in item:
                 doc = '\n' + item["docBrief"]
@@ -121,6 +120,7 @@ class Source(Base):
                 'info': item['descriptionKey'] + doc,
             })
 
+        logger.info("matches: [%d]", len(matches))
         # logger.debug("matches: [%s]", matches)
 
         self.complete(info, ctx, startcol, matches)
