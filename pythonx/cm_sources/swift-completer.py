@@ -15,10 +15,13 @@ register_source(name='swift-completer',
                 abbreviation='swift',
                 scoping=True,
                 scopes=['swift'],
-                # cm_refresh_patterns=[r'(-\>|\.|:)$'],
-                cm_refresh_patterns=[r'((?:\.|(?:,|:|->)\s+)\w*|\()'],
-                # cm_refresh_patterns=[r'(\.|:|:\s*\w*)$'],
-               )
+                cm_refresh_patterns=[r'(\.|:|:\s*\w*)$'],)
+
+
+import json
+import os
+import subprocess
+import glob
 
 
 logger = getLogger(__name__)
@@ -33,98 +36,71 @@ class Source(Base):
         try:
             from distutils.spawn import find_executable
             if not find_executable("sourcekitten"):
-                self.message('error', 'Can not find sourcekitten for completion, you need to install https://github.com/jpsim/SourceKitten')
-
-            if not find_executable("swift") and self._check_xcode_path():
-                self.message('error', 'Can not find swift or XCode: https://swift.org')
-
+                self.message('error', 'Can not find sourcekitten for completion, you need https://github.com/jpsim/SourceKitten' )
+            if not find_executable("swift") and _check_xcode__path:
+                self.message('error', 'Can not find swift or XCode: https://swift.org' )
         except Exception as ex:
             logger.exception(ex)
 
-        self.__spm = self.nvim.eval('swift_completer#get_spm_module()')
-        self.__target = self.nvim.eval('swift_completer#get_target()')
-        self.__sdk = self.nvim.eval('swift_completer#get_sdk()')
-
-
     def _check_xcode_path(self):
-        from distutils.spawn import find_executable
-        import subprocess
-
         if find_executable("xcode-select"):
-            try:
-                return subprocess.check_output(['xcode-select', '-p'])
-            except subprocess.CalledProcessError as ex:
-                logger.exception(ex)
+            return subprocess.check_output(['xcode-select', '-print-path'])
 
         return None
 
     def cm_refresh(self, info, ctx, *args):
-        import subprocess
-        import json
-
-        logger.info("refresh ****************************************")
-        buf = self.nvim.current.buffer[:]
+        src = self.get_src(ctx).encode('utf-8')
         lnum = ctx['lnum']
+        col = ctx['col']
+        filepath = ctx['filepath']
         startcol = ctx['startcol']
-        col = startcol + 1
-        enc = self.nvim.options['encoding']
+        spm = self.nvim.eval('swift_completer#get_spm_module()')
+        target = self.nvim.eval('swift_completer#get_target()')
+        sdk = self.nvim.eval('swift_completer#get_sdk()')
 
-        content = '\n'.join(buf)
+        offset = self.nvim.eval('line2byte(' + str(lnum) + ')') + col - 1
+        # For accessing methods
+        if src[offset-2] in b'.':
+            offset -= 1
 
-        offset = 0
-        for row_current, text in enumerate(buf):
-            if row_current < lnum - 1:
-                offset += len(bytes(text, enc)) + 1
-                offset += col - 1
+        args = ['sourcekitten', 'complete', '--text', src, '--offset', str(offset)]
+        if spm:
+            args += ['--spm-module', spm]
+
+        if target or sdk:
+            args += ['--']
+
+        if target:
+            args += ['-target', target]
+
+        if sdk:
+            args += ['-sdk', sdk]
 
         try:
-            # Set sourcekitten arguments
-            args = ['sourcekitten', 'complete', '--text', content.encode(enc), '--offset', str(offset)]
-            if self.__spm:
-                args += ['--spm-module', self.__spm]
-
-            if self.__target or self.__sdk:
-                args += ['--']
-
-            if self.__target:
-                args += ['-target', self.__target]
-
-            if self.__sdk:
-                args += ['-sdk', self.__sdk]
-
-            # Run sourcekitten command
-            output, _ = subprocess.Popen(
-                args,
-                stdout=subprocess.PIPE,
-            ).communicate()
-
-            json_list = json.loads(output.decode())
-
-        except subprocess.CalledProcessError:
+            result = subprocess.check_output(args)
+        except subprocess.CalledProcessError as e:
             return
 
-        # logger.info("args: %s, result: [%s]", args, output.decode())
+        logger.info("args: %s, result: [%s]", args, result.decode())
 
         matches = []
-        for item in json_list:
+        jsonList = json.loads(result.decode('utf-8'))
+        for item in jsonList:
+            name = item["name"]
+            des = item["descriptionKey"]
             doc = ""
             if "docBrief" in item:
-                doc = '\n' + item["docBrief"]
+                doc = item["docBrief"]
+            snippet = item["sourcetext"]
+            match = dict(word=name,
+                        icase=1,
+                        dup=1,
+                        menu=des,
+                        snippet=snippet,
+                        )
 
-            kind = item['kind'].split('.')[-1]
-            if kind == "free":
-                kind = item['kind'].split('.')[-2]
-
-            matches.append({
-                'word': item['sourcetext'],
-                'snippet': item['sourcetext'],
-                'menu': kind,
-                'dup': 1,
-                'info': item['descriptionKey'] + doc,
-            })
+            matches.append(match)
 
         # logger.info("matches: [%s]", matches)
 
         self.complete(info, ctx, startcol, matches)
-
-        logger.info("end matches****************************************")
