@@ -71,7 +71,6 @@ class Source(Base):
         import subprocess
         import json
 
-        logger.info("test: %d\n", offset)
         buf = self.vim.current.buffer[:]
         lnum = ctx['lnum']
         # col = ctx['col'] # get_complete_position(ctx) # startcol + 1
