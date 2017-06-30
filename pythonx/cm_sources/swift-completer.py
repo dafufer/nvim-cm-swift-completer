@@ -126,4 +126,4 @@ class Source(Base):
 
         self.complete(info, ctx, startcol, matches)
 
-        logger.info("end matches")
+        logger.info("end matches****************************************")
