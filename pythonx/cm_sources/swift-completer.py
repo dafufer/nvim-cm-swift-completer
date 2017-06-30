@@ -56,17 +56,6 @@ class Source(Base):
 
         return None
 
-    def get_complete_position(self, context):
-        # Code based on https://github.com/mitsuse/autocomplete-swift
-        import re
-
-        result = re.compile(r'\w*$').search(context['typed'])
-
-        if result is None:
-            return self.nvim.eval('col(\'.\')') - 1
-
-        return result.start()
-
     def cm_refresh(self, info, ctx, *args):
         import subprocess
         import json
@@ -75,7 +64,7 @@ class Source(Base):
         lnum = ctx['lnum']
         # col = ctx['col'] # get_complete_position(ctx) # startcol + 1
         startcol = ctx['startcol']
-        col = self.get_complete_position(ctx) + 1
+        col = startcol + 1
         enc = self.nvim.options['encoding']
 
         content = '\n'.join(buf)
@@ -114,7 +103,7 @@ class Source(Base):
             self.complete(info, ctx, startcol, [])
             return
 
-        logger.debug("args: %s, result: [%s]", args, output.decode())
+        # logger.debug("args: %s, result: [%s]", args, output.decode())
 
         matches = []
         for item in json_list:
@@ -141,6 +130,6 @@ class Source(Base):
 
             matches.append(match)
 
-        logger.debug("matches: [%s]", matches)
+        # logger.debug("matches: [%s]", matches)
 
         self.complete(info, ctx, startcol, matches)
