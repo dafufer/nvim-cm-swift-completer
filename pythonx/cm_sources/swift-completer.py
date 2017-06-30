@@ -15,8 +15,8 @@ register_source(name='swift-completer',
                 abbreviation='swift',
                 scoping=True,
                 scopes=['swift'],
-                # cm_refresh_patterns=[r'((?:\.|(?:,|:|->)\s+)\w*|\()'],)
-                cm_refresh_patterns=[r'(\.|:|:\s*\w*)$'],)
+                cm_refresh_patterns=[r'((?:\.|(?:,|:|->)\s+)\w*|\()'],)
+                # cm_refresh_patterns=[r'(\.|:|:\s*\w*)$'],)
 
 
 logger = getLogger(__name__)
@@ -105,6 +105,7 @@ class Source(Base):
 
         matches = []
         for item in json_list:
+            logger.info("item: [%s]", item)
             doc = ""
             if "docBrief" in item:
                 doc = '\n' + item["docBrief"]
