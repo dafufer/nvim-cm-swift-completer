@@ -74,7 +74,7 @@ class Source(Base):
         for row_current, text in enumerate(buf):
             if row_current < lnum - 1:
                 offset += len(bytes(text, enc)) + 1
-                offset += col - 1
+        offset += col - 1
 
         logger.info("offset: %d", offset)
         logger.info("startcol: %d", startcol)
