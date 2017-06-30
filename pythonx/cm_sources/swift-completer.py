@@ -117,7 +117,7 @@ class Source(Base):
                 'word': item['sourcetext'],
                 # 'abbr': item['name'],
                 'menu': kind,
-                'dup': 1,
+                # 'dup': 1,
                 'info': item['descriptionKey'] + doc,
             })
 
