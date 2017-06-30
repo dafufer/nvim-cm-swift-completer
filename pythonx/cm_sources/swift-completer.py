@@ -124,4 +124,4 @@ class Source(Base):
 
         # logger.debug("matches: [%s]", matches)
 
-        self.complete(info, ctx, startcol, [])
+        self.complete(info, ctx, startcol, matches)
