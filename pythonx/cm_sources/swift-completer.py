@@ -15,7 +15,8 @@ register_source(name='swift-completer',
                 abbreviation='swift',
                 scoping=True,
                 scopes=['swift'],
-                cm_refresh_patterns=[r'((?:\.|(?:,|:|->)\s+)\w*|\()'],)
+                cm_refresh_patterns=[r'(-\>|\.|:)$'],
+                # cm_refresh_patterns=[r'((?:\.|(?:,|:|->)\s+)\w*|\()'],)
                 # cm_refresh_patterns=[r'(\.|:|:\s*\w*)$'],)
 
 
@@ -115,6 +116,7 @@ class Source(Base):
 
             matches.append({
                 'word': item['sourcetext'],
+                'snippet': item['sourcetext'],
                 'menu': kind,
                 'dup': 1,
                 'info': item['descriptionKey'] + doc,
