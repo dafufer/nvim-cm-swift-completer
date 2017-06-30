@@ -62,7 +62,6 @@ class Source(Base):
 
         buf = self.nvim.current.buffer[:]
         lnum = ctx['lnum']
-        # col = ctx['col'] # get_complete_position(ctx) # startcol + 1
         startcol = ctx['startcol']
         col = startcol + 1
         enc = self.nvim.options['encoding']
@@ -75,7 +74,6 @@ class Source(Base):
                 offset += len(bytes(text, enc)) + 1
                 offset += col - 1
 
-        # logger.info("offset: %d\n", offset)
         try:
             # Set sourcekitten arguments
             args = ['sourcekitten', 'complete', '--text', content.encode(enc), '--offset', str(offset)]
@@ -121,14 +119,15 @@ class Source(Base):
             snippet = item["sourcetext"]
 
             match = dict(word=name,
-                         # icase=1,
-                         # dup=1,
-                         # menu=kind,
-                         # info=des,
-                         # snippet=snippet,
+                         icase=1,
+                         dup=1,
+                         menu=kind,
+                         info=des,
+                         snippet=snippet,
                         )
 
-            matches.append(match)
+            logger.info("match: %s", match)
+            # matches.append(match)
 
         # logger.debug("matches: [%s]", matches)
 
