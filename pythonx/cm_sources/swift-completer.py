@@ -100,7 +100,6 @@ class Source(Base):
             json_list = json.loads(output.decode())
 
         except subprocess.CalledProcessError:
-            self.complete(info, ctx, startcol, [])
             return
 
         # logger.debug("args: %s, result: [%s]", args, output.decode())
@@ -123,6 +122,6 @@ class Source(Base):
                 'info': item['descriptionKey'] + doc,
             })
 
-        logger.debug("matches: [%s]", matches)
+        # logger.debug("matches: [%s]", matches)
 
         self.complete(info, ctx, startcol, matches)
