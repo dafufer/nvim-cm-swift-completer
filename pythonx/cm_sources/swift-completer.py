@@ -87,60 +87,60 @@ class Source(Base):
                 offset += col - 1
 
         logger.info("offset: %d\n", offset)
-        # try:
-            # # Set sourcekitten arguments
-            # args = ['sourcekitten', 'complete', '--text', content.encode(enc), '--offset', str(offset)]
-            # if self.__spm:
-                # args += ['--spm-module', self.__spm]
+        try:
+            # Set sourcekitten arguments
+            args = ['sourcekitten', 'complete', '--text', content.encode(enc), '--offset', str(offset)]
+            if self.__spm:
+                args += ['--spm-module', self.__spm]
 
-            # if self.__target or self.__sdk:
-                # args += ['--']
+            if self.__target or self.__sdk:
+                args += ['--']
 
-            # if self.__target:
-                # args += ['-target', self.__target]
+            if self.__target:
+                args += ['-target', self.__target]
 
-            # if self.__sdk:
-                # args += ['-sdk', self.__sdk]
+            if self.__sdk:
+                args += ['-sdk', self.__sdk]
 
-            # # Run sourcekitten command
-            # output, _ = subprocess.Popen(
-                # args,
-                # stdout=subprocess.PIPE,
-            # ).communicate()
+            # Run sourcekitten command
+            output, _ = subprocess.Popen(
+                args,
+                stdout=subprocess.PIPE,
+            ).communicate()
 
-            # json_list = json.loads(output.decode())
+            json_list = json.loads(output.decode())
 
-        # except subprocess.CalledProcessError:
-            # self.complete(info, ctx, startcol, [])
-            # return
+        except subprocess.CalledProcessError:
+            self.complete(info, ctx, startcol, [])
+            return
 
-        # logger.debug("args: %s, result: [%s]", args, output.decode())
+        logger.debug("args: %s, result: [%s]", args, output.decode())
 
-        # matches = []
-        # for item in json_list:
-            # name = item["sourcetext"]
+        matches = []
+        for item in json_list:
+            name = item["sourcetext"]
 
-            # doc = ""
-            # if "docBrief" in item:
-                # doc = '\n' + item["docBrief"]
-            # des = item["descriptionKey"] + doc
+            doc = ""
+            if "docBrief" in item:
+                doc = '\n' + item["docBrief"]
+            des = item["descriptionKey"] + doc
 
-            # kind = item['kind'].split('.')[-1]
-            # if kind == "free":
-                # kind = item['kind'].split('.')[-2]
+            kind = item['kind'].split('.')[-1]
+            if kind == "free":
+                kind = item['kind'].split('.')[-2]
 
-            # snippet = item["sourcetext"]
+            snippet = item["sourcetext"]
 
-            # match = dict(word=name,
-                         # icase=1,
-                         # dup=1,
-                         # menu=kind,
-                         # info=des,
-                         # snippet=snippet,
-                        # )
+            match = dict(word=name,
+                         icase=1,
+                         dup=1,
+                         menu=kind,
+                         info=des,
+                         snippet=snippet,
+                        )
 
-            # matches.append(match)
+            matches.append(match)
 
-        # logger.info("matches: [%s]", matches)
+        logger.info("matches: [%s]", matches)
 
-        # self.complete(info, ctx, startcol, matches)
+        self.complete(info, ctx, startcol, matches)
