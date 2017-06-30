@@ -102,7 +102,7 @@ class Source(Base):
         except subprocess.CalledProcessError:
             return
 
-        logger.info("args: %s, result: [%s]", args, output.decode())
+        # logger.info("args: %s, result: [%s]", args, output.decode())
 
         matches = []
         for item in json_list:
@@ -122,6 +122,8 @@ class Source(Base):
                 'info': item['descriptionKey'] + doc,
             })
 
-        # logger.info("matches: [%s]", matches)
+        logger.info("matches: [%s]", matches)
 
         self.complete(info, ctx, startcol, matches)
+
+        logger.info("end matches")
