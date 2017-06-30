@@ -74,7 +74,7 @@ class Source(Base):
         for row_current, text in enumerate(buf):
             if row_current < lnum - 1:
                 offset += len(bytes(text, enc)) + 1
-        offset += col 
+        offset += col - 1
 
         # logger.info("offset: %d", offset)
         # logger.info("startcol: %d", startcol)
@@ -105,7 +105,7 @@ class Source(Base):
         except subprocess.CalledProcessError:
             return
 
-        # logger.info("args: %s, result: [%s]", args, output.decode())
+        logger.info("args: %s, result: [%s]", args, output.decode())
 
         matches = []
         for item in json_list:
