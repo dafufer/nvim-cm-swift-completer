@@ -122,7 +122,7 @@ class Source(Base):
                 'info': item['descriptionKey'] + doc,
             })
 
-        logger.info("matches: [%s]", matches)
+        # logger.info("matches: [%s]", matches)
 
         self.complete(info, ctx, startcol, matches)
 
