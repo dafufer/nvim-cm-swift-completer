@@ -107,7 +107,7 @@ class Source(Base):
 
         matches = []
         for item in json_list:
-            # name = item["sourcetext"]
+            name = item["sourcetext"]
 
             # doc = ""
             # if "docBrief" in item:
@@ -120,7 +120,7 @@ class Source(Base):
 
             # snippet = item["sourcetext"]
 
-            match = dict(word="",
+            match = dict(word=name,
                          icase=1,
                          dup=1,
                          # menu=kind,
