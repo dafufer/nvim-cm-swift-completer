@@ -123,7 +123,7 @@ class Source(Base):
                          dup=1,
                          menu=kind,
                          info="",
-                         snippet="",
+                         snippet=snippet,
                         )
 
             matches.append(match)
