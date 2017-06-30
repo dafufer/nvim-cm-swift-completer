@@ -106,29 +106,29 @@ class Source(Base):
         # logger.debug("args: %s, result: [%s]", args, output.decode())
 
         matches = []
-        # for item in json_list:
-            # name = item["sourcetext"]
+        for item in json_list:
+            name = item["sourcetext"]
 
-            # doc = ""
+            doc = ""
             # if "docBrief" in item:
                 # doc = '\n' + item["docBrief"]
-            # des = item["descriptionKey"] + doc
+            des = item["descriptionKey"] + doc
 
-            # kind = item['kind'].split('.')[-1]
-            # if kind == "free":
-                # kind = item['kind'].split('.')[-2]
+            kind = item['kind'].split('.')[-1]
+            if kind == "free":
+                kind = item['kind'].split('.')[-2]
 
-            # snippet = item["sourcetext"]
+            snippet = item["sourcetext"]
 
-            # match = dict(word=name,
-                         # icase=1,
-                         # dup=1,
-                         # menu=kind,
-                         # info=des,
-                         # snippet=snippet,
-                        # )
+            match = dict(word=name,
+                         icase=1,
+                         dup=1,
+                         menu=kind,
+                         info=des,
+                         snippet=snippet,
+                        )
 
-            # matches.append(match)
+            matches.append(match)
 
         # logger.debug("matches: [%s]", matches)
 
