@@ -121,7 +121,7 @@ class Source(Base):
             match = dict(word="",
                          icase=1,
                          dup=1,
-                         menu="",
+                         menu=kind,
                          info="",
                          snippet="",
                         )
