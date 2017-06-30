@@ -56,16 +56,16 @@ class Source(Base):
 
         return None
 
-    # def get_complete_position(self, context):
-        # # Code based on https://github.com/mitsuse/autocomplete-swift
-        # import re
+    def get_complete_position(self, context):
+        # Code based on https://github.com/mitsuse/autocomplete-swift
+        import re
 
-        # result = re.compile(r'\w*$').search(context['typed'])
+        result = re.compile(r'\w*$').search(context['typed'])
 
-        # if result is None:
-            # return self.nvim.eval('col(\'.\')') - 1
+        if result is None:
+            return self.nvim.eval('col(\'.\')') - 1
 
-        # return result.start()
+        return result.start()
 
     def cm_refresh(self, info, ctx, *args):
         import subprocess
@@ -75,7 +75,7 @@ class Source(Base):
         lnum = ctx['lnum']
         # col = ctx['col'] # get_complete_position(ctx) # startcol + 1
         startcol = ctx['startcol']
-        col = startcol + 1
+        col = get_complete_position(ctx) + 1
         enc = self.nvim.options['encoding']
 
         content = '\n'.join(buf)
