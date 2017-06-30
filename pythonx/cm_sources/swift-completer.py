@@ -120,13 +120,13 @@ class Source(Base):
 
             snippet = item["sourcetext"]
 
-            # match = dict(word="test",
-                         # icase=1,
-                         # dup=1,
-                         # menu=kind,
-                         # info=des,
-                         # snippet=snippet,
-                        # )
+            match = dict(word=name,
+                         icase=1,
+                         dup=1,
+                         menu=kind,
+                         info=des,
+                         snippet=snippet,
+                        )
 
             # matches.append(match)
 
