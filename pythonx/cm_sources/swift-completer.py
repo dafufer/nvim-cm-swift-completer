@@ -105,28 +105,21 @@ class Source(Base):
 
         matches = []
         for item in json_list:
-            name = item["sourcetext"]
-
             doc = ""
             if "docBrief" in item:
                 doc = '\n' + item["docBrief"]
-            des = item["descriptionKey"] + doc
 
             kind = item['kind'].split('.')[-1]
             if kind == "free":
                 kind = item['kind'].split('.')[-2]
 
-            snippet = item["sourcetext"]
-
-            match = dict(word="test",
-                         icase=1,
-                         dup=1,
-                         menu=kind,
-                         info=des,
-                         snippet=snippet,
-                        )
-
-            matches.append(match)
+            matches.append({
+                'word': item['sourcetext'],
+                # 'abbr': item['name'],
+                'menu': kind,
+                'dup': 1,
+                'info': item['descriptionKey'] + doc,
+            })
 
         # logger.debug("matches: [%s]", matches)
 
