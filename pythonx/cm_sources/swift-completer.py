@@ -63,7 +63,7 @@ class Source(Base):
         # result = re.compile(r'\w*$').search(context['typed'])
 
         # if result is None:
-            # return self.vim.eval('col(\'.\')') - 1
+            # return self.nvim.eval('col(\'.\')') - 1
 
         # return result.start()
 
@@ -76,7 +76,7 @@ class Source(Base):
         # col = ctx['col'] # get_complete_position(ctx) # startcol + 1
         startcol = ctx['startcol']
         col = startcol + 1
-        enc = self.vim.options['encoding']
+        enc = self.nvim.options['encoding']
 
         content = '\n'.join(buf)
 
