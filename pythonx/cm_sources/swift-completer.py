@@ -17,7 +17,8 @@ register_source(name='swift-completer',
                 scopes=['swift'],
                 cm_refresh_patterns=[r'(-\>|\.|:)$'],
                 # cm_refresh_patterns=[r'((?:\.|(?:,|:|->)\s+)\w*|\()'],)
-                # cm_refresh_patterns=[r'(\.|:|:\s*\w*)$'],)
+                # cm_refresh_patterns=[r'(\.|:|:\s*\w*)$'],
+               )
 
 
 logger = getLogger(__name__)
