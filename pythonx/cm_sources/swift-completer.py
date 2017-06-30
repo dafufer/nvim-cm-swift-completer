@@ -62,6 +62,7 @@ class Source(Base):
         import subprocess
         import json
 
+        logger.info("refresh ****************************************")
         buf = self.nvim.current.buffer[:]
         lnum = ctx['lnum']
         startcol = ctx['startcol']
