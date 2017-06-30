@@ -66,7 +66,6 @@ class Source(Base):
         lnum = ctx['lnum']
         startcol = ctx['startcol']
         col = startcol + 1
-        col = ctx['col']
         enc = self.nvim.options['encoding']
 
         content = '\n'.join(buf)
@@ -103,7 +102,7 @@ class Source(Base):
         except subprocess.CalledProcessError:
             return
 
-        # logger.debug("args: %s, result: [%s]", args, output.decode())
+        logger.info("args: %s, result: [%s]", args, output.decode())
 
         matches = []
         for item in json_list:
@@ -123,6 +122,6 @@ class Source(Base):
                 'info': item['descriptionKey'] + doc,
             })
 
-        # logger.debug("matches: [%s]", matches)
+        # logger.info("matches: [%s]", matches)
 
         self.complete(info, ctx, startcol, matches)
