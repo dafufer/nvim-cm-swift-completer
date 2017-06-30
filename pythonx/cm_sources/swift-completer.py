@@ -71,7 +71,7 @@ class Source(Base):
         import subprocess
         import json
 
-        buf = self.vim.current.buffer[:]
+        buf = self.nvim.current.buffer[:]
         lnum = ctx['lnum']
         # col = ctx['col'] # get_complete_position(ctx) # startcol + 1
         startcol = ctx['startcol']
