@@ -107,7 +107,7 @@ class Source(Base):
 
         matches = []
         for item in json_list:
-            logger.info("sourcetext: %s", item["name"])
+            # logger.info("sourcetext: %s", item["name"])
             # name = item["sourcetext"]
 
             # doc = ""
