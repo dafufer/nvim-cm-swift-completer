@@ -15,8 +15,8 @@ register_source(name='swift-completer',
                 abbreviation='swift',
                 scoping=True,
                 scopes=['swift'],
-                cm_refresh_patterns=[r'(-\>|\.|:)$'],
-                # cm_refresh_patterns=[r'((?:\.|(?:,|:|->)\s+)\w*|\()'],)
+                # cm_refresh_patterns=[r'(-\>|\.|:)$'],
+                cm_refresh_patterns=[r'((?:\.|(?:,|:|->)\s+)\w*|\()'],
                 # cm_refresh_patterns=[r'(\.|:|:\s*\w*)$'],
                )
 
@@ -66,6 +66,7 @@ class Source(Base):
         lnum = ctx['lnum']
         startcol = ctx['startcol']
         col = startcol + 1
+        col = ctx['col']
         enc = self.nvim.options['encoding']
 
         content = '\n'.join(buf)
